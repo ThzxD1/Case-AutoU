@@ -18,13 +18,11 @@ PROJECT_DIR = BASE_DIR.parent
 TEMPLATES_DIR = PROJECT_DIR / "templates"
 STATIC_DIR = PROJECT_DIR / "static"
 
-# Carrega variáveis de ambiente
 load_dotenv(PROJECT_DIR / ".env")
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
-# Healthcheck
 @app.get("/ping")
 def ping():
     return {"ok": True}
@@ -39,7 +37,6 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 CANDIDATE_LABELS = ["Produtivo", "Improdutivo"]
 
-# ===== Utils =====
 def extract_text_from_upload(upload: UploadFile) -> str:
     """Extrai texto de .pdf ou trata bytes como texto (.txt/.eml)."""
     if upload is None:
@@ -59,7 +56,7 @@ def extract_text_from_upload(upload: UploadFile) -> str:
                 parts.append(page.extract_text() or "")
             return "\n".join(parts).strip()
         except Exception:
-            pass  # fallback para bytes->texto
+            pass  
 
     for enc in ("utf-8", "latin-1"):
         try:
@@ -69,11 +66,10 @@ def extract_text_from_upload(upload: UploadFile) -> str:
     return ""
 
 def preprocess(text: str) -> str:
-    # normalização leve apenas para reduzir ruído; não altera sentido
+    
     text = re.sub(r"\s+", " ", (text or "")).strip()
     return text
 
-# ===== OpenAI classification + reply (JSON) =====
 def classify_and_reply_openai(text: str) -> dict:
     from openai import OpenAI
     from openai import AuthenticationError, APIError, RateLimitError
@@ -113,7 +109,6 @@ def classify_and_reply_openai(text: str) -> dict:
         return {"category": category, "reply": reply, "source": "openai"}
 
     except AuthenticationError as e:
-        # chave inválida/ausente
         return {
             "category": "Indefinido",
             "reply": "Erro de autenticação na OpenAI (verifique OPENAI_API_KEY).",
@@ -140,7 +135,6 @@ def classify_and_reply_openai(text: str) -> dict:
         }
 
 
-# ===== Rotas =====
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "result": None})
@@ -170,13 +164,11 @@ async def process(
 
         pre = preprocess(raw_text)
 
-        # Sempre usa OpenAI
         out = classify_and_reply_openai(pre)
         category = out["category"]
         reply = out["reply"]
         source = out.get("source", "openai")
 
-        # Log
         print(f"[classify] category={category} source={source}", file=sys.stderr)
 
         return templates.TemplateResponse("index.html", {
