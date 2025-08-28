@@ -1,10 +1,20 @@
-# AutoU - Classificador de Emails (Demo)
+# 📧 AutoU - Classificador de E-mails
 
-App FastAPI que classifica emails (Produtivo/Improdutivo) e sugere resposta.
+Aplicação **FastAPI + OpenAI** que classifica e-mails como **Produtivo** (requer ação) ou **Improdutivo** (mensagem social/agradecimento/spam) e sugere uma resposta automática em PT-BR.
 
-## Rodar
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-export HUGGINGFACE_API_TOKEN=seu_token  # opcional (zero-shot)
-uvicorn app.main:app --reload --port 8000
-# abrir http://127.0.0.1:8000
+---
+
+## 🚀 Requisitos
+
+- Python **3.11+**
+- `pip` atualizado
+- Chave da OpenAI: crie em https://platform.openai.com/account/api-keys
+
+---
+
+## ⚙️ Executar localmente
+
+### 1) Clonar o repositório
+```bash
+git clone https://github.com/seu-usuario/Case-AutoU.git
+cd Case-AutoU
