@@ -1,4 +1,4 @@
-# 📧 AutoU - Classificador de E-mails
+# 📧 Classificador de E-mails
 
 Aplicação **FastAPI + OpenAI** que classifica e-mails como **Produtivo** (requer ação) ou **Improdutivo** (mensagem social/agradecimento/spam) e sugere uma resposta automática em PT-BR.
 
