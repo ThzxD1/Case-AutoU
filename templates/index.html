@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AutoU - Classificador de Emails</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>AutoU — Classificador & Respostas</h1>
+      <p>Faça upload de um .txt/.pdf ou cole o texto do email. O sistema classifica entre <strong>Produtivo</strong> e <strong>Improdutivo</strong> e sugere uma resposta.</p>
+    </header>
+
+    <main>
+      <form action="/process" method="post" enctype="multipart/form-data">
+        <label for="file">Arquivo (.txt ou .pdf):</label>
+        <input type="file" id="file" name="file" accept=".txt,.pdf">
+        <div class="divider">ou</div>
+        <label for="email_text">Texto do email:</label>
+        <textarea id="email_text" name="email_text" rows="10" placeholder="Cole aqui o conteúdo do email..."></textarea>
+        <button type="submit">Processar</button>
+      </form>
+
+      {% if result %}
+      <section class="result">
+        <h2>Resultado</h2>
+        <div class="grid">
+          <div>
+            <h3>Categoria</h3>
+            <p class="pill">{{ result.category }}</p>
+            <p><small>{{ result.chars }} caracteres analisados</small></p>
+            <p><small>Fonte: {{ result.source }}</small></p>
+
+          </div>
+          <div>
+            <h3>Resposta sugerida</h3>
+            <p class="reply">{{ result.reply }}</p>
+          </div>
+        </div>
+        <details>
+          <summary>Prévia do texto analisado</summary>
+          <pre class="preview">{{ result.preview }}</pre>
+        </details>
+      </section>
+      {% endif %}
+    </main>
+
+    <footer>
+      <p>Feito com FastAPI + OpenAI GPT.</p>
+    </footer>
+  </body>
+</html>
