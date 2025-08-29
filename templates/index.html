@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AutoU - Classificador de Emails</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+      .test-buttons {
+        margin: 1em 0;
+      }
+      .test-buttons button {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 6px 12px;
+        border: none;
+        background: #4a90e2;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .test-buttons button:hover {
+        background: #357ab8;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -19,6 +37,16 @@
         <div class="divider">ou</div>
         <label for="email_text">Texto do email:</label>
         <textarea id="email_text" name="email_text" rows="10" placeholder="Cole aqui o conteúdo do email..."></textarea>
+
+        <!-- Botões de testes -->
+        <div class="test-buttons">
+          <p><strong>Testar com exemplos:</strong></p>
+          <button type="button" onclick="loadExample('suporte')">Solicitação de Suporte Técnico</button>
+          <button type="button" onclick="loadExample('atualizacao')">Atualização sobre Caso em Aberto</button>
+          <button type="button" onclick="loadExample('duvida')">Dúvidas sobre o Sistema</button>
+          <button type="button" onclick="loadExample('improdutivo')">Improdutivo (Felicitações/Agradecimentos)</button>
+        </div>
+
         <button type="submit">Processar</button>
       </form>
 
@@ -31,7 +59,6 @@
             <p class="pill">{{ result.category }}</p>
             <p><small>{{ result.chars }} caracteres analisados</small></p>
             <p><small>Fonte: {{ result.source }}</small></p>
-
           </div>
           <div>
             <h3>Resposta sugerida</h3>
@@ -49,5 +76,21 @@
     <footer>
       <p>Feito com FastAPI + OpenAI GPT.</p>
     </footer>
+
+    <script>
+      function loadExample(type) {
+        let text = "";
+        if (type === "suporte") {
+          text = "Olá, meu computador não está ligando corretamente após a última atualização. Poderiam me ajudar com o suporte?";
+        } else if (type === "atualizacao") {
+          text = "Prezados, gostaria de saber se houve algum progresso no chamado #12345 aberto na semana passada.";
+        } else if (type === "duvida") {
+          text = "Tenho uma dúvida sobre como acessar os relatórios no novo sistema. Existe algum manual ou treinamento disponível?";
+        } else if (type === "improdutivo") {
+          text = "Bom dia! Quero desejar feliz aniversário e uma excelente semana!";
+        }
+        document.getElementById("email_text").value = text;
+      }
+    </script>
   </body>
 </html>
