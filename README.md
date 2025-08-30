@@ -6,6 +6,8 @@ Aplicação **FastAPI + OpenAI** que classifica e-mails como **Produtivo** (requ
 
 ## OBS: Upload da Aplicação na nuvem pelo Github + Render, então talvez precise esperar 1 minuto para carregar o app, pois fica em estado ocioso após 15 minutos de inatividade!
 
+- https://case-autou-0m98.onrender.com
+
 ## 🚀 Requisitos
 
 - Python **3.11+**
