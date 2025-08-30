@@ -8,6 +8,7 @@ Aplicação **FastAPI + OpenAI** que classifica e-mails como **Produtivo** (requ
 
 - https://case-autou-0m98.onrender.com
 
+---
 ## 🚀 Requisitos
 
 - Python **3.11+**
